@@ -1,0 +1,170 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ece5d5;
+}
+
+:root {
+  --cell-size: min(90vw, 100px);
+  --mark-size: calc(100px * 0.9);
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  grid-template-columns: repeat(3, 100px);
+
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #deaa7d;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* for hovering x and o */
+
+.container.x .cell:not(.x):not(.o):hover::before,
+.container.x .cell:not(.x):not(.o):hover::after {
+  background-color: rgba(255, 151, 151, 0.4);
+}
+
+.container.o .cell:not(.x):not(.o):hover::before,
+.container.o .cell:not(.x):not(.o):hover::after {
+  background-color: rgba(75, 85, 99, 0.2);
+}
+
+/* x style */
+
+.cell.x::before,
+.cell.x::after,
+.container.x .cell:not(.x):not(.o):hover::before,
+.container.x .cell:not(.x):not(.o):hover::after {
+  content: "";
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+  position: absolute;
+}
+
+.cell.x::before,
+.cell.x::after {
+  background-color: #ff9797;
+}
+
+.cell.x::before,
+.container.x .cell:not(.x):not(.o):hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.x:after,
+.container.x .cell:not(.x):not(.o):hover::after {
+  transform: rotate(-45deg);
+}
+
+/* o style */
+
+.cell.o::before,
+.cell.o::after,
+.container.o .cell:not(.x):not(.o):hover::before,
+.container.o .cell:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cell.o::before {
+  background-color: #4b5563;
+}
+
+.cell.o::before,
+.container.o .cell:not(.x):not(.o):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.cell.o::after,
+.container.o .cell:not(.x):not(.o):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: #deaa7d;
+}
+
+.cell.o,
+.cell.x {
+  cursor: not-allowed;
+}
+
+.result-msg-box {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.result-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.result-msg p {
+  color: #d9d9d9;
+  font-size: clamp(24px, 5vw, 38px);
+  font-weight: 600;
+}
+
+.restart-btn-style {
+  border: none;
+  outline: none;
+  background-color: #c6d4d6;
+  padding: 16px 22px;
+  color: #735c00;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: clamp(10px, 2vw, 16px) clamp(14px, 3vw, 22px);
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+.restart-btn-style:hover {
+  transform: scale(1.1);
+}
+
+.result-msg-box.show {
+  display: flex;
+}
+
+@media (hover: none) {
+  .cell {
+    cursor: default; 
+  }
+  .restart-btn-style:hover {
+    transform: none;
+  }
+}
